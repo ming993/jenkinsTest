@@ -1,0 +1,41 @@
+server:
+  session-timeout: 28800
+#    tomcat:
+#        max-threads: 1000
+#        min-spare-threads: 30
+  port: ${sport:21942}
+#  port: ${sport:6201}
+#    uri-encoding: utf-8
+  tomcat:
+    basedir: /app/temp
+
+spring:
+  thymeleaf:
+    mode: LEGACYHTML5
+    cache: false
+  jackson:
+    time-zone: Asia/Shanghai
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: non_null
+  profiles:
+    active: ${profile:test}  # 开发环境设置 test, 测试环境设置 test, 正式环境 pro，华云整合平台 hyzh
+  http:
+    multipart:
+      max-file-size: 100Mb
+      max-request-size: 100Mb
+    listener:
+      simple:
+        #acknowledge-mode: auto
+        concurrency: 10
+        max-concurrency: 50
+        retry:
+          enabled: true
+        prefetch: 5
+  devtools:
+    restart:
+      enabled: true
+
+  messages:
+    basename: il8n/messages
+
+

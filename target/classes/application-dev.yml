@@ -1,0 +1,179 @@
+ev:
+  uploadPath: D:/var/uploaded_files/1/
+  excelPath: D:/var/excel_files/
+logging:
+  level:
+    root: info
+    com.bootdo: debug
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://wxxinsoft.gnway.org:35/xinsoft-xf?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+    username: xinsoft
+    password: xinsoft411
+
+    initialSize: 1
+    minIdle: 3
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 30000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,slf4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    # 合并多个DruidDataSource的监控数据
+    #useGlobalDataSourceStat: true
+  redis:
+    host: 192.168.1.36
+    password: password
+    port: 6379
+    # 连接超时时间（毫秒）
+    timeout: 10000
+    pool:
+      # 连接池中的最大空闲连接
+      max-idle: 8
+      # 连接池中的最小空闲连接
+      min-idle: 10
+      # 连接池最大连接数（使用负值表示没有限制）
+      max-active: 100
+      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+      max-wait: -1
+  mail:
+    host: smtp.qq.com
+    username: 3197385370@qq.com
+    password: hlnhkjoiulsndfcb
+    default-encoding: utf-8
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+feign:
+  hystrix:
+    enabled: false
+
+
+hystrix:
+  command:
+    default:  #default全局有效，entity id指定应用有效
+      execution:
+        timeout:
+          #是否开启超时熔断
+          enabled: false
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000 #断路器超时时间，默认1000ms
+
+ribbon:
+  OkToRetryOnAllOperations: false #对所有操作请求都进行重试,默认false
+  ReadTimeout: 10000   #负载均衡超时时间，默认值5000
+  ConnectTimeout: 2000 #ribbon请求连接的超时时间，默认值2000
+  MaxAutoRetries: 0     #对当前实例的重试次数，默认0
+  MaxAutoRetriesNextServer: 0 #对切换实例的重试次数，默认1
+upload:
+  config:
+    path: D:/Program Files/jenkins/workspace/xinsoft-xf/target/classes/fdfs_client.conf
+platform:
+  file:
+    system:
+      path: C:/mnt/
+      maxFileSize: 100MB
+      maxRequestSize: 100MB
+wechat:
+  grantType: client_credential
+  appId: wxfa7b80072b471aa6
+  secret: 1badb7b383589f2f18375aac266624a4
+  redirectUrl: 'http://192.168.1.74:8080?code=%s'
+  mysect: xinsoft
+wechatTemplateMsgParam:
+  msgTemplateId: YaNAi4gkGnBLaqq37CMB5fitwqrzplHLjJGT4URuZDE
+  templateMsgColor: '#173177'
+  templateMsgUrl: 'http://192.168.1.74:8080'
+LibreOffice:
+  localpath: D:/LibreOffice/
+jodconverter:
+  local:
+    office-home: D:\LibreOffice
+    portNumbers: 8400,8401,8402
+    maxTasksPerProcess: 100
+    enabled: true
+backups:
+  db:
+    dbUrl: 192.168.1.36
+    dbName: xinsoft-xf
+    dbPort: 35
+    dbUsername: xinsoft
+    dbPassword: xinsoft411
+    winFilePath: D:\db_backups
+    linuxFilePath: /data/dbback
+# 是否为docker环境
+docker: no
+
+aliPay:
+  # 应用ID
+  appId: 2021000117611068
+  # 商户私钥，您的PKCS8格式RSA2私钥
+  privateKey: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCA5u/zMticENTMuSL1KuAM0df62siDvAReR3vvAvfaAgMcm5T9SEpSe0+EctQmO6BKKKl2oOjvOEYAADdVGuqRoHj0i6gU1SJEzoww2IjnkaTvDaCNJmYsINL+1idAeLzwPjwpRhPRmYiNN/Gc3m1zTmm+FcEd0pu7pqMxIhezbr6bIpLUv5tpdSQfBrteAATOcGHyg+MofCqhzOhqZKONyCfKq7D9v0rW05y5RzyFxxjZ89xbvGIGM4pCyKTyYFYVFY8oQTzz4h1qLD10mj34x+CUKn9Q8v3CottttR9azq0lQ6UCq3vEZQ6qDIQWMZZY/jXdyzhqZSGdIfLBbAcLAgMBAAECggEAdAZqyS9lReTohnXGf4NeNGvVyliPz/O2wt35MgQr8DGLd36bNviQ3Xlc880gJGHbP6UmFD92K40thOas54/Yv8f/1661VjsaI3D/QyBE6ptwKDTN5P9BTEsnYHaG0kNbXavHHyeSw0E9Zk+KzTZwsi9Mguq17xAZWWj+z0TurHSXw02eYfoIofJHKOymG4pjYfn1fsMAyZSEkvMJ7JazLoGLTOqnlWbSkt0NR+XvBkC0qcH0kQRohGNU8Pk2W4obmklQaGAIJ5lD8aXDuSD2DpNP8e/8WbhRy+0txdVXhTqjdNQmTigaDup22euoU6j9bnsiHJtYqFxfXb7u5mlvUQKBgQDyHvtbEHBPK7ulNFepMw9a0RBvOakGCHNJjHFvkxj94kUwt3HfLw3RbbKJ9UyvPhC7HXV7JHG7WilYNcO26Wn3ZruuOVXwxnVdkI7M1chLkvTkkFCxLTqiNys0nnAeOfKqhy9BsHyLiMpG1Zez/V1zC9cY378P1KLIh5gyFHUytQKBgQCISoSnQYa0ZzMdrP/8ITv9JVZ49IPl0/0MadpyywUi6u3YNYKEL9uYfjsD+L6SrYyj33Ftuj4jKGHRPTTyhxcGjpkEvvjVzxK6cFWuWnU4I5gXmf8mz1gsloVQeIxnfbzFG8/KGgId6r6lILqe2lKDso+Vxsvqoefp7RLBN3OqvwKBgQC4yZCJBdjRc8043uPwjLmxVFI4sUchBZ4HihqhTyEJ04F/FuLftWfUaOaUiBTIwpO+W1Nocn4iwUNAwXfnx+lKGqwu4i+HHdBBYqy6BIdjtnsVXldXge94Eqb0998WEp/0KkyU0/+Z9wJ6YVXw1vRVc7nskAegK2c5qNMtlZOE6QKBgHHwgmflovzMzfIAQF2DV0hx35HtMRuBlyq6j/KqAZhIeSDo0z05WUdqOGJAoOm1Bz+0vHo0WmBAEU7A8bPT9g74RbqvAQ6WOBz/btH9M8QEFdGdX68NZrSX/cnhjdezSY4rixJ1ndFu/4TDEOFeud7594oKkU2Nn3l0RdqcRim3AoGAMuzpwwUcvG+LW/gILLJSwfsLyAIrc/X44+VBCF/ahZHPfErayJEdgkS8YC9Wyzm3q6KQDEZGYorHEM46KI1b/xCCUVDRJN2qs+9EOu6yDw4KKx1/B6A6KDF0Glx9MGpFDZq4QB7YtkeOYGKDT/swQ29IyOj9mIZuCvaaQU86mGw=
+  # 支付宝公钥,查看地址：https://openhome.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
+  publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArsvt6dmxUks/zg83nj0ki0vOvomczFD8PbSZGo60v8T6bjTdAUsoWHMfvQ8VKzi/qqLe6F2RZ3cb/o+k3qJ3QHBj3KizhYckByfCpOBXLGgTpvTqMov844ceJ9G1+tIeLHRTX2+CG2WKrjEk71W9AMVwFcoRnX25izyDMRiS19V68Ho4Juuyhxz4qV5wrLAGQd9bBSTzL6OM/Aw1k2dqg+KPLoEGOFzk6b++h72WBmalOHH6OSo6GixlkHbgttF8Kc/tdG8xstTqNJYAUB31gPQUaAcy1L4XWRSuphyD5muSzg1ZFBMGQa7RgmJ3zWYPIPxXb+pUf/27YMYH/AhtMQIDAQAB
+  #服务器异步通知页面路径需http://格式的完整路径，不能加?id=123这类自定义参数
+  notifyUrl: http://192.168.1.56/apis/pay/aliPay/aliPayCallBack
+  #页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数
+  returnUrl: http://192.168.1.56:8889/sccess.html
+  # 签名方式
+  signType: RSA2
+  # 字符编码格式
+  charset: utf-8
+  # 支付宝网关,生产环境去掉dev字段
+  gatewayUrl: https://openapi.alipaydev.com/gateway.do
+  # 支付宝网关
+  logPath: "C:\\"
+wxPay:
+  # 公众账号ID
+  appId: wx04bd47526bcc5d43
+  # 商户号
+  mchID: 1229840802
+  # 密钥
+  key: yeRXBc2IZ9Y1HWDeMjjPDDPsVeY6M8kO
+  #服务器异步通知页面路径需http://格式的完整路径，不能加?id=123这类自定义参数
+  notifyUrl: http://562e379b4082.ngrok.io/apis/pay/aliPay/aliPayCallBack
+#门锁
+door:
+  username: au72jx91xo2xjh2
+  password: 30cuha7nd9ao37ah89cn
+  #baseurl: http://47.99.186.193:3000/v1
+  baseurl: http://bo.ruochanit.com:3000/v1
+  base64Str: YXU3Mmp4OTF4bzJ4amgyOjMwY3VoYTduZDlhbzM3YWg4OWNu
+  phoneNumber: 19952213081
+  callBackUrl: 192.168.1.56:8889/apis/smartOperation/doorCallBack
+smart:
+  username: wxsw
+  password: wxsw
+  grant_type: password
+  baseurl: https://api.smartmetering.top
+  productKey: yy4eKtAzsNP
+  applicationId: 684
+org:
+  ftp:
+    address: 192.168.1.36
+    port:  21
+    userName: ftpuser
+    password: 1q2w3e4r!@
+    basePath: gyhl-file
+    localPath: /data/ftp

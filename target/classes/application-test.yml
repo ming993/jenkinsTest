@@ -1,0 +1,10 @@
+server:
+  session-timeout: 28800
+  port: ${sport:6201}
+ev:
+  uploadPath: D:/var/uploaded_files/1/
+  excelPath: D:/var/excel_files/
+logging:
+  level:
+    root: info
+    com.bootdo: debug
